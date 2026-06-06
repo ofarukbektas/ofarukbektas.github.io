@@ -282,6 +282,9 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   /* Araç grid */
   .veh-grid{grid-template-columns:1fr;}
 
+  /* Dashboard 2 kolon → 1 kolon */
+  .dash-2col{grid-template-columns:1fr!important;}
+
   /* Lightbox kontrolleri */
   .lbox-x{top:8px;right:8px;}
 
@@ -1748,7 +1751,8 @@ function renderDashboard() {
 
   // ── Stok uyarıları ──
   var stoklar2 = ld('yt_stok');
-  var stokAlerts = stoklar2.filter(function(s){ return stokDurum(s).alert; });
+  var stokAlerts = [];
+  try { stokAlerts = stoklar2.filter(function(s){ return stokDurum(s).alert; }); } catch(e) {}
 
   // ── Araç uyarıları ──
   var now = Date.now();
@@ -1778,7 +1782,7 @@ function renderDashboard() {
   h += '</div>';
 
   // 2 kolon layout
-  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px" class="dash-2col">';
 
   // Sol: Son kasa hareketleri
   h += '<div>';
@@ -1843,7 +1847,7 @@ function renderDashboard() {
     else if(b.bakiye < 0) dashCariAlacak.push({ad:c.ad, bakiye:Math.abs(b.bakiye)});
   });
   if(dashCariBorc.length || dashCariAlacak.length){
-    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px" class="dash-2col">';
     if(dashCariBorc.length){
       h += '<div><div class="sec-title" style="margin-top:0">🏢 Ödenmesi Gereken (Borç)</div><div class="tw"><table><thead><tr><th>Cari</th><th style="text-align:right">Tutar</th></tr></thead><tbody>';
       dashCariBorc.sort(function(a,b){return b.bakiye-a.bakiye;}).forEach(function(c){
@@ -2114,7 +2118,7 @@ function openEmpDetail(id) {
     '<div class="stat"><div class="stat-lbl">Ödenen</div><div class="stat-val ok">' + fmt(ode) + '</div></div>' +
     '<div class="stat"><div class="stat-lbl">' + (bak > 0 ? 'Alacak' : bak < 0 ? 'Borçlu' : 'Ödendi') + '</div><div class="stat-val ' + (bak > 0 ? 'ok' : bak < 0 ? 'err' : 'done') + '">' + fmt(Math.abs(bak)) + '</div></div>' +
     '</div>';
-  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="dash-2col">';
   h += '<div><div class="sec-title">Proje Bazlı Kazanç</div><div class="tw"><table><thead><tr><th>Proje</th><th>Kazanç</th></tr></thead><tbody>';
   var prjKeys = Object.keys(byPrj);
   if (prjKeys.length) prjKeys.forEach(function(k) { h += '<tr><td>' + esc(k) + '</td><td style="color:var(--acc);font-weight:700">' + fmt(byPrj[k]) + '</td></tr>'; });
@@ -3405,7 +3409,7 @@ function renderKasa(){
 // ══════════════════════════════════════════════
 (function init(){
   // Bozuk localStorage verilerini temizle
-  var arrayKeys = ['yt_emp','yt_wl','yt_pay','yt_pmeta','yt_photos','yt_arac','yt_muh','yt_teklif'];
+  var arrayKeys = ['yt_emp','yt_wl','yt_pay','yt_pmeta','yt_photos','yt_arac','yt_muh','yt_teklif','yt_stok','yt_stok_hareket','yt_cari','yt_cari_islem'];
   arrayKeys.forEach(function(k){
     try {
       var v = localStorage.getItem(k);
