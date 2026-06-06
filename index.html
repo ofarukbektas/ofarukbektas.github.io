@@ -200,9 +200,102 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   .page{display:block!important;padding:0!important;}
   body{display:block;height:auto;}
 }
+
+/* ══════════════════════════════════════════════
+   MOBİL RESPONSIVE - 768px altı
+══════════════════════════════════════════════ */
+#mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:998;}
+#mob-overlay.open{display:block;}
+
+#mob-toggle{
+  display:none;
+  position:fixed;top:12px;left:12px;z-index:1001;
+  background:var(--acc);color:#000;border:none;
+  border-radius:8px;width:42px;height:42px;font-size:20px;
+  cursor:pointer;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+
+@media(max-width:768px){
+  /* Layout: dikey yığma */
+  body{flex-direction:column;overflow:auto;height:auto;}
+
+  /* Hamburger butonu görünür */
+  #mob-toggle{display:flex;}
+
+  /* Sidebar: sabit panel, kapalıyken ekran dışı */
+  #sidebar{
+    position:fixed;top:0;left:-260px;width:240px;height:100%;
+    z-index:999;transition:left .25s ease;
+    overflow-y:auto;
+  }
+  #sidebar.open{left:0;}
+
+  /* Ana içerik: full genişlik, üstten boşluk */
+  #main{width:100%;min-width:0;padding-top:0;}
+  .page{padding:14px 12px;padding-top:62px;}
+
+  /* Page header */
+  .ph{flex-direction:column;gap:10px;align-items:flex-start;}
+  .pt{font-size:20px;}
+
+  /* Tablolar yatay kaydırmalı */
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{min-width:520px;}
+
+  /* Form grid'leri tek sütuna inerek */
+  .fr,.fr3{grid-template-columns:1fr!important;}
+
+  /* Stats row */
+  .stats-row{grid-template-columns:repeat(auto-fit,minmax(120px,1fr));}
+
+  /* Card grid */
+  .card-grid{grid-template-columns:1fr;}
+
+  /* Butonlar */
+  .btn{font-size:12px;padding:7px 11px;}
+  .ph > .btn, .ph > div > .btn{width:100%;justify-content:center;}
+
+  /* Modal tam ekran */
+  .mover{padding:8px;}
+  .modal{padding:16px;}
+  .modal-sm,.modal-md,.modal-lg,.modal-xl{max-width:100%;}
+
+  /* Search row */
+  .srow{flex-direction:column;}
+  .sinp{width:100%!important;max-width:100%!important;}
+
+  /* Filter butonları küçük */
+  .filter-btns{flex-wrap:wrap;}
+  .filter-btn{font-size:11px;padding:4px 9px;}
+
+  /* Toast konumu */
+  #toast-wrap{left:10px;right:10px;bottom:14px;}
+  .toast{font-size:12px;}
+
+  /* Proje metric */
+  .proj-metrics{grid-template-columns:1fr 1fr 1fr;}
+
+  /* Sidebar özet */
+  .sb-sum{padding:10px 12px;}
+
+  /* Araç grid */
+  .veh-grid{grid-template-columns:1fr;}
+
+  /* Lightbox kontrolleri */
+  .lbox-x{top:8px;right:8px;}
+
+  /* Kalem/chip wrap */
+  .kalem-grid{gap:3px;}
+  .kb{font-size:10px;padding:3px 7px;}
+}
 </style>
 </head>
 <body>
+
+<!-- MOBİL HAMBURGER -->
+<button id="mob-toggle" onclick="toggleSidebar()" title="Menü">☰</button>
+<div id="mob-overlay" onclick="closeSidebar()"></div>
 
 <!-- SIDEBAR -->
 <nav id="sidebar">
@@ -3333,7 +3426,25 @@ function renderKasa(){
   ge('pay-month').value=ym;
   renderDashboard();
   updateSidebar();
-})();
+// ══════════════════════════════════════════════
+// MOBİL SIDEBAR
+// ══════════════════════════════════════════════
+function toggleSidebar(){
+  var sb=document.getElementById('sidebar');
+  var ov=document.getElementById('mob-overlay');
+  var open=sb.classList.toggle('open');
+  if(open){ov.classList.add('open');}else{ov.classList.remove('open');}
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mob-overlay').classList.remove('open');
+}
+// Sayfa değişince menüyü kapat
+document.querySelectorAll('.nav-item').forEach(function(el){
+  el.addEventListener('click',function(){
+    if(window.innerWidth<=768)closeSidebar();
+  });
+});
 </script>
 </body>
 </html>
