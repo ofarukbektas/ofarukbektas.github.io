@@ -307,7 +307,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   </div>
   <div class="nav-item active" data-page="dashboard">🏠 Genel Bakış</div>
   <div class="nav-lbl">👷 Personel</div>
-  <div class="nav-item active" data-page="calisanlar">👤 Çalışanlar</div>
+  <div class="nav-item" data-page="calisanlar">👤 Çalışanlar</div>
   <div class="nav-item" data-page="cdefteri">📋 Çalışma Defteri</div>
   <div class="nav-item" data-page="odemeler">💸 Ödemeler</div>
   <div class="nav-lbl">🏗 Projeler</div>
@@ -993,7 +993,7 @@ ge('m-confirm-no').addEventListener('click', function() {
 // ══════════════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════════════
-var _curPage = 'calisanlar';
+var _curPage = 'dashboard';
 document.querySelectorAll('.nav-item').forEach(function(el) {
   el.addEventListener('click', function() {
     var page = el.dataset.page;
@@ -1171,14 +1171,27 @@ function openCariModal(id){
 }
 
 function saveCari(){
-  var ad = gv('cr-ad').trim();
-  if(!ad){ toast('Cari adı zorunlu!','err'); return; }
-  var cariler = ld('yt_cari');
-  var obj = { id:_editCariId||uid(), ad:ad, tip:gv('cr-tip')||'Tedarikçi',
-    tel:gv('cr-tel'), email:gv('cr-email'), adres:gv('cr-adres'), not:gv('cr-not') };
-  if(_editCariId){ var i=cariler.findIndex(function(x){return x.id===_editCariId;}); if(i>=0)cariler[i]=obj; else cariler.push(obj); }
-  else cariler.push(obj);
-  sv('yt_cari',cariler); closeM('m-cari'); renderCari(); toast('Cari kaydedildi.');
+  try {
+    var ad = gv('cr-ad').trim();
+    if(!ad){ toast('Cari adı zorunlu!','err'); return; }
+    var cariler = ld('yt_cari');
+    if(!Array.isArray(cariler)) cariler = [];
+    var obj = { id:_editCariId||uid(), ad:ad, tip:gv('cr-tip')||'Tedarikçi',
+      tel:gv('cr-tel'), email:gv('cr-email'), adres:gv('cr-adres'), not:gv('cr-not') };
+    if(_editCariId){
+      var i=cariler.findIndex(function(x){return x.id===_editCariId;});
+      if(i>=0) cariler[i]=obj; else cariler.push(obj);
+    } else {
+      cariler.push(obj);
+    }
+    localStorage.setItem('yt_cari', JSON.stringify(cariler));
+    closeM('m-cari');
+    renderCari();
+    toast('Cari kaydedildi.');
+  } catch(err) {
+    toast('Hata: ' + err.message, 'err');
+    console.error('saveCari error:', err);
+  }
 }
 
 function openCariIslem(cariId){
@@ -3430,6 +3443,8 @@ function renderKasa(){
   ge('pay-month').value=ym;
   renderDashboard();
   updateSidebar();
+})();
+
 // ══════════════════════════════════════════════
 // MOBİL SIDEBAR
 // ══════════════════════════════════════════════
