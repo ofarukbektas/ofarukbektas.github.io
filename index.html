@@ -254,9 +254,14 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   .ph{flex-direction:column;gap:10px;align-items:flex-start;}
   .pt{font-size:20px;}
 
-  /* Tablolar yatay kaydırmalı */
+  /* Tablolar: dar tablolar sığar, geniş olanlar kaydırmalı */
   .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-  table{min-width:520px;}
+  table{min-width:0;width:100%;table-layout:auto;}
+  th,td{font-size:11px;padding:6px 5px;white-space:nowrap;}
+  /* Uzun metin sütunları kırılsın */
+  th.mob-wrap,td.mob-wrap{white-space:normal;word-break:break-word;min-width:60px;}
+  /* Gizlenecek sütunlar */
+  .mob-hide{display:none;}
 
   /* Form grid'leri tek sütuna inerek */
   .fr,.fr3{grid-template-columns:1fr!important;}
@@ -388,7 +393,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
     <input type="month" class="sinp" id="wl-month" style="max-width:155px">
   </div>
   <div class="tw"><table>
-    <thead><tr><th>Tarih</th><th>Çalışan</th><th>Proje</th><th>İş Türü</th><th>Çarpan</th><th>Birim Fiyat</th><th>Kazanç</th><th>Not</th><th>İşlem</th></tr></thead>
+    <thead><tr><th>Tarih</th><th>Çalışan</th><th class="mob-hide">Proje</th><th>İş Türü</th><th class="mob-hide">Çarpan</th><th class="mob-hide">Birim Fiyat</th><th>Kazanç</th><th class="mob-hide">Not</th><th>İşlem</th></tr></thead>
     <tbody id="wl-tbody"></tbody>
   </table></div>
 </div>
@@ -403,7 +408,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
     <input type="month" class="sinp" id="pay-month" style="max-width:155px">
   </div>
   <div class="tw"><table>
-    <thead><tr><th>Tarih</th><th>Çalışan</th><th>Tutar</th><th>Tür</th><th>İşlem</th></tr></thead>
+    <thead><tr><th>Tarih</th><th>Çalışan</th><th>Tutar</th><th class="mob-hide">Tür</th><th>İşlem</th></tr></thead>
     <tbody id="pay-tbody"></tbody>
   </table></div>
 </div>
@@ -425,7 +430,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   <div class="ph"><div><div class="pt">Proje Özeti</div><div class="ps">Çalışma kayıtları proje bazlı</div></div></div>
   <div class="srow"><select class="sinp" id="prozet-sel" style="max-width:260px"><option value="">Tüm Projeler</option></select></div>
   <div class="tw"><table>
-    <thead><tr><th>Proje</th><th>Çalışan</th><th>Tarih</th><th>İş Türü</th><th>Çarpan</th><th>Kazanç</th><th>Not</th></tr></thead>
+    <thead><tr><th>Proje</th><th>Çalışan</th><th>Tarih</th><th class="mob-hide">İş Türü</th><th class="mob-hide">Çarpan</th><th>Kazanç</th><th class="mob-hide">Not</th></tr></thead>
     <tbody id="prozet-tbody"></tbody>
   </table></div>
 </div>
@@ -436,7 +441,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
     <button class="btn btn-pri" id="btn-quote-add">+ Teklif Oluştur</button>
   </div>
   <div class="tw"><table>
-    <thead><tr><th>Tarih</th><th>Müşteri</th><th>Adres</th><th>Toplam</th><th>Durum</th><th>İşlem</th></tr></thead>
+    <thead><tr><th>Tarih</th><th>Müşteri</th><th class="mob-hide">Adres</th><th>Toplam</th><th>Durum</th><th>İşlem</th></tr></thead>
     <tbody id="quote-tbody"></tbody>
   </table></div>
 </div>
@@ -457,7 +462,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
     </select>
   </div>
   <div class="tw"><table>
-    <thead><tr><th>Cari Adı</th><th>Tip</th><th>Telefon</th><th>Toplam Borç</th><th>Toplam Alacak</th><th>Bakiye</th><th>İşlem</th></tr></thead>
+    <thead><tr><th>Cari Adı</th><th>Tip</th><th class="mob-hide">Telefon</th><th class="mob-hide">Toplam Borç</th><th class="mob-hide">Toplam Alacak</th><th>Bakiye</th><th>İşlem</th></tr></thead>
     <tbody id="cari-tbody"></tbody>
   </table></div>
 </div>
@@ -477,12 +482,12 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   </div>
   <div class="stats-row" id="stok-stats"></div>
   <div class="tw"><table>
-    <thead><tr><th>Stok Adı</th><th>Kategori</th><th>Birim</th><th>Mevcut</th><th>Min. Stok</th><th>Durum</th><th>Birim Fiyat</th><th>Toplam Değer</th><th>İşlem</th></tr></thead>
+    <thead><tr><th>Stok Adı</th><th class="mob-hide">Kategori</th><th>Birim</th><th>Mevcut</th><th class="mob-hide">Min. Stok</th><th>Durum</th><th>Birim Fiyat</th><th class="mob-hide">Toplam Değer</th><th>İşlem</th></tr></thead>
     <tbody id="stok-tbody"></tbody>
   </table></div>
   <div class="sec-title" style="margin-top:20px">📋 Son Stok Hareketleri</div>
   <div class="tw"><table>
-    <thead><tr><th>Tarih</th><th>Stok</th><th>Hareket</th><th>Miktar</th><th>Proje</th><th>Açıklama</th></tr></thead>
+    <thead><tr><th>Tarih</th><th>Stok</th><th>Hareket</th><th>Miktar</th><th class="mob-hide">Proje</th><th class="mob-hide">Açıklama</th></tr></thead>
     <tbody id="stok-hareket-tbody"></tbody>
   </table></div>
 </div>
@@ -502,7 +507,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
   </div>
   <div class="stats-row" id="muh-stats"></div>
   <div class="tw"><table>
-    <thead><tr><th>Tarih</th><th>Tür</th><th>Kategori</th><th>Tutar</th><th>Açıklama</th><th>İşlem</th></tr></thead>
+    <thead><tr><th>Tarih</th><th>Tür</th><th>Kategori</th><th>Tutar</th><th class="mob-hide">Açıklama</th><th>İşlem</th></tr></thead>
     <tbody id="muh-tbody"></tbody>
   </table></div>
 </div>
@@ -510,7 +515,7 @@ input[type=range]{accent-color:var(--acc);width:100%;margin:5px 0;}
 <div class="page" id="page-kasa">
   <div class="ph"><div><div class="pt">Kasa Defteri</div><div class="ps">Kronolojik kümülatif bakiye</div></div></div>
   <div class="tw"><table>
-    <thead><tr><th>Tarih</th><th>Açıklama</th><th>Tür</th><th>Giren</th><th>Çıkan</th><th>Bakiye</th></tr></thead>
+    <thead><tr><th>Tarih</th><th class="mob-wrap">Açıklama</th><th class="mob-hide">Tür</th><th>Giren</th><th>Çıkan</th><th>Bakiye</th></tr></thead>
     <tbody id="kasa-tbody"></tbody>
   </table></div>
 </div>
@@ -1302,9 +1307,9 @@ function renderCari(){
     return '<tr>'+
       '<td class="tdb">'+esc(c.ad)+'</td>'+
       '<td><span class="sb sb-blue">'+esc(c.tip)+'</span></td>'+
-      '<td>'+esc(c.tel||'—')+'</td>'+
-      '<td style="color:var(--err);font-weight:700">'+fmt(b.borc)+'</td>'+
-      '<td style="color:var(--ok);font-weight:700">'+fmt(b.alacak+b.odeme)+'</td>'+
+      '<td class="mob-hide">'+esc(c.tel||'—')+'</td>'+
+      '<td class="mob-hide" style="color:var(--err);font-weight:700">'+fmt(b.borc)+'</td>'+
+      '<td class="mob-hide" style="color:var(--ok);font-weight:700">'+fmt(b.alacak+b.odeme)+'</td>'+
       '<td>'+bakStr+'</td>'+
       '<td><div class="qbtns">'+
         '<button class="btn btn-sec btn-sm" data-tip="Detay" data-action="cari-det" data-id="'+c.id+'">Detay</button>'+
@@ -1703,13 +1708,13 @@ function renderStok() {
       : '';
     return '<tr>' +
       '<td class="tdb">' + esc(s.ad) + (s.aciklama ? '<div style="font-size:11px;color:var(--txt3)">' + esc(s.aciklama) + '</div>' : '') + '</td>' +
-      '<td><span class="sb sb-blue">' + esc(s.kategori || '—') + '</span></td>' +
+      '<td class="mob-hide"><span class="sb sb-blue">' + esc(s.kategori || '—') + '</span></td>' +
       '<td>' + esc(s.birim) + '</td>' +
       '<td><b style="font-size:15px">' + (s.miktar || 0) + '</b>' + barHtml + '</td>' +
-      '<td style="color:var(--txt3)">' + (s.min_stok || '—') + '</td>' +
+      '<td class="mob-hide" style="color:var(--txt3)">' + (s.min_stok || '—') + '</td>' +
       '<td><span class="sb ' + d.cls + '">' + d.txt + '</span></td>' +
       '<td>' + fmt(s.birim_fiyat || 0) + '</td>' +
-      '<td style="color:var(--acc);font-weight:700">' + fmt(deger) + '</td>' +
+      '<td class="mob-hide" style="color:var(--acc);font-weight:700">' + fmt(deger) + '</td>' +
       '<td><div class="qbtns">' +
         '<button class="btn btn-pri btn-xs" data-tip="Hareket Ekle" data-action="stok-har" data-id="' + s.id + '">↕</button>' +
         '<button class="btn btn-ghost btn-xs" data-tip="Düzenle" data-action="stok-edit" data-id="' + s.id + '">✏</button>' +
@@ -1733,8 +1738,8 @@ function renderStok() {
         '<td class="tdb">' + esc(h.stok_ad || h.stok_id) + '</td>' +
         '<td><span class="sb ' + tipCls + '">' + h.tip + '</span></td>' +
         '<td style="font-weight:700;color:' + (h.tip === 'Giriş' ? 'var(--ok)' : h.tip === 'Çıkış' ? 'var(--err)' : 'var(--txt)') + '">' + (h.tip === 'Çıkış' ? '−' : '+') + h.miktar + '</td>' +
-        '<td style="font-size:12px">' + esc(prj ? prj.ad : '—') + '</td>' +
-        '<td style="font-size:12px;color:var(--txt3)">' + esc(h.aciklama || '') + '</td>' +
+        '<td class="mob-hide" style="font-size:12px">' + esc(prj ? prj.ad : '—') + '</td>' +
+        '<td class="mob-hide" style="font-size:12px;color:var(--txt3)">' + esc(h.aciklama || '') + '</td>' +
       '</tr>';
     }).join('');
   }
@@ -1824,11 +1829,11 @@ function renderDashboard() {
   h += '<div class="sec-title" style="margin:0">💰 Son Kasa Hareketleri</div>';
   h += '<button class="btn btn-ghost btn-xs" onclick="document.querySelector(\'[data-page=kasa]\').click()" title="Tüm kasa defteri">Tümü →</button>';
   h += '</div>';
-  h += '<div class="tw"><table><thead><tr><th>Tarih</th><th>Açıklama</th><th>Tür</th><th style="text-align:right">Tutar</th></tr></thead><tbody>';
+  h += '<div class="tw"><table><thead><tr><th>Tarih</th><th>Açıklama</th><th class="mob-hide">Tür</th><th style="text-align:right">Tutar</th></tr></thead><tbody>';
   if(son5.length) {
     son5.forEach(function(r){
       var g=r.tur==='Gelir';
-      h+='<tr><td>'+r.tarih+'</td><td style="font-size:12px">'+esc(r.aciklama||r.kategori||'—')+'</td><td><span class="sb '+(g?'sb-ok':'sb-err')+'">'+r.tur+'</span></td><td style="text-align:right;font-weight:700;color:'+(g?'var(--ok)':'var(--err)')+'">'+fmt(r.tutar)+'</td></tr>';
+      h+='<tr><td>'+r.tarih+'</td><td style="font-size:12px">'+esc(r.aciklama||r.kategori||'—')+'</td><td class="mob-hide"><span class="sb '+(g?'sb-ok':'sb-err')+'">'+r.tur+'</span></td><td style="text-align:right;font-weight:700;color:'+(g?'var(--ok)':'var(--err)')+'">'+fmt(r.tutar)+'</td></tr>';
     });
   } else h+='<tr><td colspan="4" class="empty" style="padding:14px">Hareket yok</td></tr>';
   h += '</tbody></table></div></div>';
@@ -2392,10 +2397,10 @@ function renderWL() {
   tb.innerHTML = wls.map(function(w) {
     var emp = emps.find(function(e){return e.id===w.calisan_id;});
     var prj = prjs.find(function(p){return p.id===w.proje_id;});
-    return '<tr><td>' + w.tarih + '</td><td class="tdb">' + esc((emp||{}).ad||'?') + '</td><td>' + esc((prj||{}).ad||'—') + '</td>' +
-      '<td><span class="sb sb-blue">' + esc(w.istur) + '</span></td><td>' + w.carpan + 'x</td>' +
-      '<td>' + fmt(w.birim) + '</td><td style="color:var(--acc);font-weight:700">' + fmt(w.kazanc) + '</td>' +
-      '<td style="font-size:11px;color:var(--txt3)">' + esc(w.not||'') + '</td>' +
+    return '<tr><td>' + w.tarih + '</td><td class="tdb">' + esc((emp||{}).ad||'?') + '</td><td class="mob-hide">' + esc((prj||{}).ad||'—') + '</td>' +
+      '<td><span class="sb sb-blue">' + esc(w.istur) + '</span></td><td class="mob-hide">' + w.carpan + 'x</td>' +
+      '<td class="mob-hide">' + fmt(w.birim) + '</td><td style="color:var(--acc);font-weight:700">' + fmt(w.kazanc) + '</td>' +
+      '<td class="mob-hide" style="font-size:11px;color:var(--txt3)">' + esc(w.not||'') + '</td>' +
       '<td><div class="qbtns">' +
         '<button class="btn btn-ghost btn-xs" data-tip="Düzenle" data-action="wl-edit" data-id="'+w.id+'">✏</button>' +
         '<button class="btn btn-err btn-xs" data-tip="Sil" data-action="wl-del" data-id="'+w.id+'">🗑</button>' +
@@ -2486,7 +2491,7 @@ function renderPays(){
   if(!pays.length){tb.innerHTML='<tr><td colspan="5"><div class="empty"><div class="ei">💸</div><p>Ödeme kaydı yok</p></div></td></tr>';return;}
   tb.innerHTML=pays.map(function(p){
     var emp=emps.find(function(e){return e.id===p.calisan_id;});
-    return '<tr><td>'+p.tarih+'</td><td class="tdb">'+esc((emp||{}).ad||'?')+'</td><td style="color:var(--ok);font-weight:700">'+fmt(p.tutar)+'</td><td><span class="sb sb-blue">'+esc(p.tur)+'</span></td>' +
+    return '<tr><td>'+p.tarih+'</td><td class="tdb">'+esc((emp||{}).ad||'?')+'</td><td style="color:var(--ok);font-weight:700">'+fmt(p.tutar)+'</td><td class="mob-hide"><span class="sb sb-blue">'+esc(p.tur)+'</span></td>' +
       '<td><div class="qbtns">' +
         '<button class="btn btn-ghost btn-xs" data-tip="Düzenle" data-action="pay-edit" data-id="'+p.id+'">✏</button>' +
         '<button class="btn btn-err btn-xs" data-tip="Sil" data-action="pay-del" data-id="'+p.id+'">🗑</button>' +
@@ -2852,7 +2857,7 @@ function renderProOzet(){
   tb.innerHTML=wls.map(function(w){
     var emp=emps.find(function(e){return e.id===w.calisan_id;});
     var prj=prjs.find(function(p){return p.id===w.proje_id;});
-    return'<tr><td>'+esc((prj||{}).ad||'—')+'</td><td class="tdb">'+esc((emp||{}).ad||'?')+'</td><td>'+w.tarih+'</td><td><span class="sb sb-blue">'+esc(w.istur)+'</span></td><td>'+w.carpan+'x</td><td style="color:var(--acc);font-weight:700">'+fmt(w.kazanc)+'</td><td style="font-size:11px;color:var(--txt3)">'+esc(w.not||'')+'</td></tr>';
+    return'<tr><td>'+esc((prj||{}).ad||'—')+'</td><td class="tdb">'+esc((emp||{}).ad||'?')+'</td><td>'+w.tarih+'</td><td class="mob-hide"><span class="sb sb-blue">'+esc(w.istur)+'</span></td><td class="mob-hide">'+w.carpan+'x</td><td style="color:var(--acc);font-weight:700">'+fmt(w.kazanc)+'</td><td class="mob-hide" style="font-size:11px;color:var(--txt3)">'+esc(w.not||'')+'</td></tr>';
   }).join('');
 }
 ge('prozet-sel').addEventListener('change',renderProOzet);
@@ -3153,7 +3158,7 @@ function renderQuotes(){
     return '<tr>'+
       '<td>'+q.tarih+'</td>'+
       '<td class="tdb">'+esc(q.musteri||'—')+'</td>'+
-      '<td style="font-size:11px;color:var(--txt3)">'+esc(q.adres||'—')+'</td>'+
+      '<td class="mob-hide" style="font-size:11px;color:var(--txt3)">'+esc(q.adres||'—')+'</td>'+
       '<td style="color:var(--acc);font-weight:700">'+fmt(q.genelToplam)+'</td>'+
       '<td><span class="sb '+sbCls+'">'+sbTxt+'</span></td>'+
       '<td><div class="qbtns">'+btns+'</div></td>'+
@@ -3404,7 +3409,7 @@ function renderMuh(){
       '<td><span class="sb '+(r.tur==='Gelir'?'sb-ok':'sb-err')+'">'+(r.tur==='Gelir'?'📈 Gelir':'📉 Gider')+'</span></td>'+
       '<td>'+esc(r.kategori||'—')+(r.cari_ad?'<div style="font-size:11px;color:var(--txt3)">'+esc(r.cari_ad)+'</div>':'')+(r.odeme_yontemi?'<span class="sb sb-blue" style="font-size:10px">'+esc(r.odeme_yontemi)+'</span>':'')+'</td>'+
       '<td style="font-weight:700">'+fmt(r.tutar)+'</td>'+
-      '<td>'+esc(r.aciklama||'')+'</td>'+
+      '<td class="mob-hide">'+esc(r.aciklama||'')+'</td>'+
       '<td><div class="qbtns">'+
         '<button class="btn btn-ghost btn-xs" data-tip="Düzenle" data-action="muh-edit" data-id="'+r.id+'">✏</button>'+
         '<button class="btn btn-err btn-xs" data-tip="Sil" data-action="muh-del" data-id="'+r.id+'">🗑</button>'+
@@ -3429,8 +3434,8 @@ function renderKasa(){
     var gelir=r.tur==='Gelir';
     if(gelir)bak+=r.tutar;else bak-=r.tutar;
     return '<tr>'+
-      '<td>'+r.tarih+'</td><td>'+esc(r.aciklama||r.kategori||'—')+'</td>'+
-      '<td><span class="sb '+(gelir?'sb-ok':'sb-err')+'">'+r.tur+'</span></td>'+
+      '<td>'+r.tarih+'</td><td class="mob-wrap">'+esc(r.aciklama||r.kategori||'—')+'</td>'+
+      '<td class="mob-hide"><span class="sb '+(gelir?'sb-ok':'sb-err')+'">'+r.tur+'</span></td>'+
       '<td class="kasa-giren">'+(gelir?fmt(r.tutar):'—')+'</td>'+
       '<td class="kasa-cikan">'+(gelir?'—':fmt(r.tutar))+'</td>'+
       '<td style="font-weight:700;color:'+(bak>=0?'var(--ok)':'var(--err)')+'">'+fmt(Math.abs(bak))+(bak<0?' (-)':'')+'</td>'+
